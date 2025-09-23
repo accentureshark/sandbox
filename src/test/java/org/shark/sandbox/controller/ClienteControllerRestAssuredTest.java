@@ -3,11 +3,10 @@ package org.shark.sandbox.controller;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
 import static io.restassured.RestAssured.*;
@@ -30,7 +29,7 @@ public class ClienteControllerRestAssuredTest {
         given()
             .port(port)
         .when()
-            .get("/clientes")
+            .get("/api/clientes")
         .then()
             .statusCode(200)
             .contentType(ContentType.JSON);
@@ -44,7 +43,7 @@ public class ClienteControllerRestAssuredTest {
             .contentType(ContentType.JSON)
             .body(clienteJson)
         .when()
-            .post("/clientes")
+            .post("/api/clientes")
         .then()
             .statusCode(anyOf(is(200), is(201)))
             .body("nombre", equalTo("Juan Perez"))
@@ -60,14 +59,15 @@ public class ClienteControllerRestAssuredTest {
             .contentType(ContentType.JSON)
             .body(clienteJson)
         .when()
-            .post("/clientes");
+            .post("/api/clientes");
+        System.out.println("Respuesta POST /api/clientes: " + response.asString()); // Debug
         int id = response.jsonPath().getInt("id");
 
         // Ahora lo consultamos
         given()
             .port(port)
         .when()
-            .get("/clientes/" + id)
+            .get("/api/clientes/" + id)
         .then()
             .statusCode(200)
             .body("nombre", equalTo("Ana Gomez"))
@@ -83,16 +83,15 @@ public class ClienteControllerRestAssuredTest {
             .contentType(ContentType.JSON)
             .body(clienteJson)
         .when()
-            .post("/clientes");
+            .post("/api/clientes");
         int id = response.jsonPath().getInt("id");
 
         // Eliminar cliente
         given()
             .port(port)
         .when()
-            .delete("/clientes/" + id)
+            .delete("/api/clientes/" + id)
         .then()
             .statusCode(anyOf(is(200), is(204)));
     }
 }
-
