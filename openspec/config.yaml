@@ -1,0 +1,48 @@
+schema: spec-driven
+
+context: |
+  Proyecto educativo para un workshop de Spec-Driven Development.
+
+  Stack actual:
+  - Java 17
+  - Spring Boot 3.2.5
+  - Maven
+  - Spring Web
+  - Spring Data JPA
+  - H2
+  - Lombok
+  - Springdoc / OpenAPI
+
+  Dominio actual:
+  - CRUD de clientes bajo /api/clientes
+  - Cliente contiene id, nombre, email y telefono
+  - El código actual usa Controller + Repository de forma directa
+
+  Objetivo del workshop:
+  - enseñar Intent -> Clarification -> Spec -> Design -> Tasks -> Implementation
+  - hacer persistente el contexto en artefactos versionados
+  - permitir cambiar de agente o LLM sin depender del chat previo
+
+rules:
+  proposal:
+    - Expresar primero el problema y el valor esperado; no anticipar una solución Java.
+    - Declarar explícitamente qué queda fuera de alcance.
+  specs:
+    - Describir comportamiento observable y reglas de negocio, no clases, anotaciones ni métodos Java.
+    - Usar escenarios verificables con GIVEN/WHEN/THEN cuando ayuden a eliminar ambigüedad.
+    - No inventar decisiones de negocio; señalar las preguntas pendientes.
+    - Mantener compatibilidad con el comportamiento existente salvo cambio explícito.
+  design:
+    - Las decisiones de implementación pertenecen aquí, no en la spec.
+    - Preferir el cambio mínimo necesario y evitar refactors amplios no solicitados.
+    - Explicar trade-offs cuando se introduzca una nueva capa o patrón.
+  tasks:
+    - Relacionar las tareas con requirements o escenarios verificables.
+    - Incluir pruebas automatizadas para comportamiento nuevo o modificado.
+
+operations:
+  apply:
+    guidance:
+      - Tratar los artefactos OpenSpec existentes como fuente de verdad.
+      - No agregar comportamiento no especificado.
+      - Ejecutar mvn test después de implementar.
